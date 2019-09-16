@@ -26,7 +26,7 @@ namespace listas
 	{
    	public static void Main(string[] args)
     	{
-        	Lista l1 = new Lista(2);
+        	Lista listaPrincipal = new Lista(2);
         	bool rodando = true;
         	STATE currentState = STATE.START;
 
@@ -35,26 +35,35 @@ namespace listas
                 	case STATE.START:
                     	Console.Write("Qual o tamanho da lista?");
                     	int r = Int32.Parse(Console.ReadLine());
-                    	l1 = new Lista(r);
+                    	listaPrincipal = new Lista(r);
                     	string[] opcoes = {"Gerar aleatoriamente", "Inserir valores um à um"};
                     	int re = MostrarPerguntas("Como gostaria de adicionar itens para esse array?", opcoes);
                     	if (re == 0) {
-                        	l1.PreencherAleatoriamente();
+                        	listaPrincipal.PreencherAleatoriamente();
                     	}
                     	else if (re == 1) {
-                        	l1.PreencherOrdenadamente();
+                        	listaPrincipal.PreencherOrdenadamente();
                     	}
                     	currentState = STATE.MAINMENU;
                     	break;
                 	case STATE.MAINMENU:
-                	string[] mainMenuOptions = {"Ver itens no array", "Inserir item", "Procurar item", "Acessar um valor por índice", "Limpar a lista e recomeçar", "Sair"};
+                	string[] mainMenuOptions = {
+						"Ver itens no array", 
+						"Inserir item", 
+						"Procurar item", 
+						"Acessar um valor por índice", 
+						"Remover um item por valor", 
+						"Remover por índice", 
+						"Ordenar a lista", 
+						"Limpar a lista e recomeçar",
+						"Sair"};
                     	int rMainMenu = MostrarPerguntas("O que deseja fazer?", mainMenuOptions);
                     	if(rMainMenu == 0) {
-                        	Console.WriteLine("O Array possui "+ l1.Length() + " items");
+                        	Console.WriteLine("O Array possui "+ listaPrincipal.Length() + " items");
                         	Console.Write("Seus items são: " );
 							Console.WriteLine("\n\n");
-                        	for(int i = 0; i < l1.Length(); i++) {
-                            	Console.Write(l1.RetornaValorIndice(i) +", ");
+                        	for(int i = 0; i < listaPrincipal.Length(); i++) {
+                            	Console.Write(listaPrincipal.RetornaValorIndice(i) +", ");
                         	}
                         	Console.WriteLine("");
    						 
@@ -62,7 +71,7 @@ namespace listas
    						 
    						 Console.WriteLine("Informe o valor desejado");
                    		 int valorInserido = Int32.Parse(Console.ReadLine());
-   						 bool resultado = l1.InserirItem(valorInserido);
+   						 bool resultado = listaPrincipal.InserirItem(valorInserido);
    						 if(resultado == true){
    							 Console.WriteLine("Valor Inserido com sucesso");
    						 }else {
@@ -74,7 +83,7 @@ namespace listas
                         //  currentState = STATE.SEARCHBYID;
    						 Console.Write("Informe o valor à ser procurado");
                    		 int val = Int32.Parse(Console.ReadLine());
-   						 int resultBuscaValor = l1.BuscaValor(val);
+   						 int resultBuscaValor = listaPrincipal.BuscaValor(val);
    						 if(resultBuscaValor < 0){
    							 Console.WriteLine("Valor não encontrado");
    						 }else {
@@ -84,7 +93,7 @@ namespace listas
    					 else if (rMainMenu == 3) {
                        	Console.Write("Informe o índice desejado");
                    		 int indice = Int32.Parse(Console.ReadLine());
-   						 int valorIndice = l1.RetornaValorIndice(indice);
+   						 int valorIndice = listaPrincipal.RetornaValorIndice(indice);
    						 if(valorIndice < 0){
    							 Console.WriteLine("O índice informado ultrapassa o limite da lista");
    						 }else {
@@ -92,9 +101,33 @@ namespace listas
    						 }
                     	}
    					 else if (rMainMenu == 4) {
-                        	currentState = STATE.START;
+							Console.Write("Informe o valor à ser removido: ");
+                   		 	int valor = Int32.Parse(Console.ReadLine());
+							bool resultado = listaPrincipal.RemoverPorValor(valor);
+							if (resultado) {
+								Console.WriteLine("Valor removido com sucesso");
+							} else {
+								Console.WriteLine("Valor não encontrado");
+							}
                     	}
-   					 else if (rMainMenu == 5) {
+						else if (rMainMenu == 5) {
+							Console.Write("Informe o índice à ser removido: ");
+                   		 	int indice = Int32.Parse(Console.ReadLine());
+							bool resultado = listaPrincipal.RemoverPorIndice(indice);
+							if (resultado) {
+								Console.WriteLine("Valor no índice removido com sucesso");
+							} else {
+								Console.WriteLine("Índice não encontrado");
+							}
+                    	}
+						else if (rMainMenu == 6) {
+							listaPrincipal.Ordernar();
+							
+						}
+						else if (rMainMenu == 7) {
+							currentState = STATE.START;
+						}
+   					 else if (rMainMenu == 8) {
                         	rodando = false;
    						 break;
                     	}
