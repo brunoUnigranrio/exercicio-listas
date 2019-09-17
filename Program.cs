@@ -55,6 +55,7 @@ namespace listas
 						"Remover um item por valor", 
 						"Remover por índice", 
 						"Ordenar a lista", 
+						"Busca Binária (Apenas listas ordenadas)",
 						"Limpar a lista e recomeçar",
 						"Sair"};
                     	int rMainMenu = MostrarPerguntas("O que deseja fazer?", mainMenuOptions);
@@ -125,9 +126,20 @@ namespace listas
 							
 						}
 						else if (rMainMenu == 7) {
+							if(listaPrincipal.ordenado){
+								Console.WriteLine("Digite o valor do elemento que deseja buscar: ");
+								int elemento = Int32.Parse(Console.ReadLine());
+								int indiceElemento = listaPrincipal.BuscaBinaria(elemento);
+								Console.WriteLine("Valor encontrado no índice "+ indiceElemento);
+							}else{
+								Console.WriteLine("Não é possivel realizar busca binária em listas desordenadas");
+							}
+							
+						}
+						else if (rMainMenu == 8) {
 							currentState = STATE.START;
 						}
-   					 else if (rMainMenu == 8) {
+   					 else if (rMainMenu == 9) {
                         	rodando = false;
    						 break;
                     	}
