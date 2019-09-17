@@ -5,12 +5,12 @@ class Lista
 
     private int indiceVisivelAoUser, tamanhoReal;
     private int[] lista;
-    bool ordenado = false;
-
+    public bool ordenado = false;
+    
     //constructor
     public Lista(int tamanho)
     {
-        this.indiceVisivelAoUser = tamanho - 1;
+        this.indiceVisivelAoUser = tamanho -1;
         this.tamanhoReal = tamanho + 10;
         this.lista = new int[tamanhoReal];
     }
@@ -51,7 +51,7 @@ class Lista
             lista[indiceVisivelAoUser] = item;
             Console.WriteLine("Tamanho para user: " + indiceVisivelAoUser);
             Console.WriteLine("LISTANDO APÓS INSERIR");
-            itemsNoArray();
+            itemsNoArray();       
 			ordenado = false;
             return true;
         }
@@ -103,6 +103,26 @@ class Lista
         return true;
 
     }
+
+    public int BuscaBinaria(int elemento){
+        int maximo = indiceVisivelAoUser;
+        int minimo = 0;
+        int media;
+        int indexElemento = -1;
+
+        while((minimo <= maximo) && (indexElemento == -1)){
+            media = (minimo+maximo)/2;
+            if(lista[media] == elemento){
+                indexElemento = media;
+            }else if(lista[media] < elemento){
+                minimo=media++;
+            }else{
+                maximo=media--;
+            }
+        }
+        return indexElemento;
+    }
+
     //buscando valor e retorna o índice
     /**
     * Retorna o índice do valor passado como argumento, ou -1 caso não seja encontrado
